@@ -1,10 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --tg-theme-bg-color: #ffffff;
+  --tg-theme-text-color: #010101;
+  --tg-theme-hint-color: #D1D1D1;
+  --tg-theme-link-color: #2D70C4;
+  --tg-theme-button-color: #5AC8FB;
+  --tg-theme-button-text-color: #FFFDFC;
+  --tg-theme-secondary-bg-color: #F3F2F8;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+
 body {
-  background-color: var(--tg-theme-bg-color);
+  max-width: 100vw;
+  background-color: var(--tg-theme-secondary-bg-color);
   color: var(--tg-theme-text-color);
+}
+/* 
+input:focus {
+  outline: none;
+} */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

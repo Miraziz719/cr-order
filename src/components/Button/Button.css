@@ -3,6 +3,6 @@
   background: var(--tg-theme-button-color);
   color: var(--tg-theme-button-text-color);
   border: none;
-  outline: none;
+  outline: 1px solid red;
   cursor: pointer;
 }

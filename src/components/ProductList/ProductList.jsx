@@ -5,21 +5,28 @@ import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
 
 const products = [
-    {id: '1', title: 'Джинсы', price: 5000, description: 'Синего цвета, прямые'},
-    {id: '2', title: 'Куртка', price: 12000, description: 'Зеленого цвета, теплая'},
-    {id: '3', title: 'Джинсы 2', price: 5000, description: 'Синего цвета, прямые'},
-    {id: '4', title: 'Куртка 8', price: 122, description: 'Зеленого цвета, теплая'},
-    {id: '5', title: 'Джинсы 3', price: 5000, description: 'Синего цвета, прямые'},
-    {id: '6', title: 'Куртка 7', price: 600, description: 'Зеленого цвета, теплая'},
-    {id: '7', title: 'Джинсы 4', price: 5500, description: 'Синего цвета, прямые'},
-    {id: '8', title: 'Куртка 5', price: 12000, description: 'Зеленого цвета, теплая'},
+  {
+    title: "Go'sht",
+    items: [
+      {id: '1', title: '0.3-0.6'},
+      {id: '2', title: '0.7-0.9'},
+      {id: '3', title: '1.0-1.2'},
+      {id: '4', title: '1.2-1.5'},
+    ]
+  }, {
+    title: "Razdelka",
+    items: [
+      {id: '5', title: 'File'},
+      {id: '6', title: 'Bedro'},
+      {id: '7', title: 'Bedro laxm'},
+      {id: '8', title: 'Akrachka'},
+      {id: '9', title: 'Golen'},
+      {id: '10', title: 'Qanot'},
+      {id: '11', title: 'Boyin'},
+      {id: '12', title: 'Dum'},
+    ]
+  },
 ]
-
-const getTotalPrice = (items = []) => {
-    return items.reduce((acc, item) => {
-        return acc += item.price
-    }, 0)
-}
 
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState([]);
@@ -28,7 +35,6 @@ const ProductList = () => {
     const onSendData = useCallback(() => {
         const data = {
             products: addedItems,
-            totalPrice: getTotalPrice(addedItems),
             queryId,
         }
         fetch('http://localhost:8000/web-data', {
@@ -64,20 +70,28 @@ const ProductList = () => {
         } else {
             tg.MainButton.show();
             tg.MainButton.setParams({
-                text: `Купить ${getTotalPrice(newItems)}`
+                text: `Купить`
             })
         }
     }
 
     return (
-        <div className={'list'}>
-            {products.map((item, idx) => (
-                <ProductItem
-                    key={idx}
-                    product={item}
-                    onAdd={onAdd}
-                    className={'item'}
-                />
+        <div>
+            {products.map((cat, cidx) => (
+              <div className='p-[12px] max-w-[450px] mx-auto'  key={cidx}>
+                <p className='pb-[5px] text-hint font-bold'>{cat.title}</p>
+                <div className=''>
+                  {cat.items.map((item, idx) => (
+                    <ProductItem
+                      key={idx}
+                      product={item}
+                      onAdd={onAdd}
+                      className='my-[5px] bg-bg rounded-md p-[5px] shadow-sm'
+                    />
+                  ))}
+                </div>
+                
+              </div>
             ))}
         </div>
     );
