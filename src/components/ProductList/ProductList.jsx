@@ -77,10 +77,10 @@ const ProductList = () => {
 
       setAddedItems(newArr)
 
-      if(newArr.length === 0) {
+      const addedProducts = getAddedProduct(newArr)
+      if(addedProducts.length === 0) {
           tg.MainButton.hide();
       } else {
-        const addedProducts = getAddedProduct(newArr)
 
         tg.MainButton.show();
         tg.MainButton.setParams({
