@@ -41,6 +41,8 @@ const getAddedProduct = (items = []) => {
   return items.filter((item) => (item.amount && item.amount > 0))
 }
 
+
+
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState(products);
     const {tg, queryId} = useTelegram();
