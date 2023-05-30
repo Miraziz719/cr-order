@@ -1,11 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './ProductItem.css';
 
-const ProductItem = ({product, className, onAdd, onRemove}) => {
+const ProductItem = ({product, className, onChange}) => {
     const [amount, setamount] = useState('');
 
+    useEffect(() => {
+        onChange({
+           ...product, 
+           amount: amount
+        })
+    }, [amount])
+
     const onAddHandler = () => {
-        if((+amount+5)>=10000) return
+        if((+amount+5)>=10000) return setamount(9999)
         setamount(+amount+5)
     }
     const onRemoveHandler = () => {
@@ -13,6 +20,7 @@ const ProductItem = ({product, className, onAdd, onRemove}) => {
         setamount(+amount-5)
     }
     function handleChange(event) {
+        if(event.target.value>=10000) return setamount(9999)
         setamount(event.target.value)
     }
 

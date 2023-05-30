@@ -4,7 +4,7 @@ import ProductItem from "../ProductItem/ProductItem";
 import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
 
-const products = [
+const productsInCategory = [
   {
     title: "Go'sht",
     items: [
@@ -27,57 +27,64 @@ const products = [
     ]
   },
 ]
+const products = productsInCategory.map(cat => {
+  return cat.items
+}).flat(1)
 
+const getTotalAmount = (items = []) => {
+  return items.reduce((acc, item) => {
+      return acc += item.amount
+  }, 0)
+}
 const ProductList = () => {
-    const [addedItems, setAddedItems] = useState([]);
+    const [addedItems, setAddedItems] = useState(products);
     const {tg, queryId} = useTelegram();
 
-    const onSendData = useCallback(() => {
-        const data = {
-            products: addedItems,
-            queryId,
+
+    // const onSendData = useCallback(() => {
+    //     const data = {
+    //         products: addedItems,
+    //         queryId,
+    //     }
+    //     fetch('http://localhost:8000/web-data', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(data)
+    //     })
+    // }, [addedItems])
+
+    // useEffect(() => {
+    //     tg.onEvent('mainButtonClicked', onSendData)
+    //     return () => {
+    //         tg.offEvent('mainButtonClicked', onSendData)
+    //     }
+    // }, [onSendData])
+
+    const onChange = (product) => {
+      const newArr = addedItems.map(item => {
+        if(item.id === product.id) {
+          if(product.amount > 0) return product
         }
-        fetch('http://localhost:8000/web-data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-    }, [addedItems])
+        return item
+      })
 
-    useEffect(() => {
-        tg.onEvent('mainButtonClicked', onSendData)
-        return () => {
-            tg.offEvent('mainButtonClicked', onSendData)
-        }
-    }, [onSendData])
+      setAddedItems(newArr)
 
-    const onAdd = (product) => {
-        const alreadyAdded = addedItems.find(item => item.id === product.id);
-        let newItems = [];
-
-        if(alreadyAdded) {
-            newItems = addedItems.filter(item => item.id !== product.id);
-        } else {
-            newItems = [...addedItems, product];
-        }
-
-        setAddedItems(newItems)
-
-        if(newItems.length === 0) {
-            tg.MainButton.hide();
-        } else {
-            tg.MainButton.show();
-            tg.MainButton.setParams({
-                text: `Купить`
-            })
-        }
+      if(newArr.length === 0) {
+          tg.MainButton.hide();
+      } else {
+          tg.MainButton.show();
+          tg.MainButton.setParams({
+              text: `Сделать заказ (${newArr.length}) ${getTotalAmount(newArr)}kg`
+          })
+      }
     }
 
     return (
         <div>
-            {products.map((cat, cidx) => (
+            {productsInCategory.map((cat, cidx) => (
               <div className='p-[12px] max-w-[450px] mx-auto'  key={cidx}>
                 <p className='pb-[5px] text-hint font-bold'>{cat.title}</p>
                 <div className=''>
@@ -85,7 +92,7 @@ const ProductList = () => {
                     <ProductItem
                       key={idx}
                       product={item}
-                      onAdd={onAdd}
+                      onChange={onChange}
                       className='my-[5px] bg-bg rounded-md p-[5px] shadow-sm'
                     />
                   ))}
