@@ -40,13 +40,13 @@ const ProductItem = ({product, className, onChange}) => {
         e.preventDefault()
         
         let tid = null
-        let speed = 600
+        let speed = 300
 
         function handleChange () {
             increment ? onAddHandler() : onRemoveHandler()
             tid = setTimeout(() => {
                 handleChange()
-                speed = speed <= 100 ? 100 : speed -= 200
+                speed = speed <= 100 ? 100 : speed -= 100
             }, speed)
         }
         handleChange()
@@ -69,13 +69,11 @@ const ProductItem = ({product, className, onChange}) => {
                 <button 
                     className='px-[16px] h-full bg-button text-button-text'
                     onMouseDown={e => handleStart(e)}
-                    onTouchStart={e => handleStart(e)}
                 >-</button>
                 <input onChange={handleChangeInput} value={amount} className='max-w-[60px] px-[8px] h-full bg-bg' type='number' inputMode='numeric' ></input>
                 <button 
                     className='px-[16px] h-full bg-button text-button-text'
                     onMouseDown={e => handleStart(e, true)}
-                    onTouchStart={e => handleStart(e, true)}
                 >+</button>
             </div>
         </div>
