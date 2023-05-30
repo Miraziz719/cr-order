@@ -48,26 +48,26 @@ const ProductList = () => {
     const {tg, queryId} = useTelegram();
 
 
-    // const onSendData = useCallback(() => {
-    //     const data = {
-    //         products: addedItems,
-    //         queryId,
-    //     }
-    //     fetch('http://localhost:8000/web-data', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(data)
-    //     })
-    // }, [addedItems])
+    const onSendData = useCallback(() => {
+        const data = {
+            products: getAddedProduct(),
+            queryId,
+        }
+        fetch('http://localhost:5000/api/v1/common/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+    }, [addedItems])
 
-    // useEffect(() => {
-    //     tg.onEvent('mainButtonClicked', onSendData)
-    //     return () => {
-    //         tg.offEvent('mainButtonClicked', onSendData)
-    //     }
-    // }, [onSendData])
+    useEffect(() => {
+        tg.onEvent('mainButtonClicked', onSendData)
+        return () => {
+            tg.offEvent('mainButtonClicked', onSendData)
+        }
+    }, [onSendData])
 
     const onChange = (product) => {
       const newArr = addedItems.map(item => {
