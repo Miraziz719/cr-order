@@ -40,13 +40,13 @@ const ProductItem = ({product, className, onChange}) => {
         e.preventDefault()
         
         let tid = null
-        let speed = 400
+        let speed = 600
 
         function handleChange () {
             increment ? onAddHandler() : onRemoveHandler()
             tid = setTimeout(() => {
                 handleChange()
-                speed = speed <= 100 ? 100 : speed -= 100
+                speed = speed <= 100 ? 100 : speed -= 200
             }, speed)
         }
         handleChange()
