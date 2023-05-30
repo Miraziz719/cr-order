@@ -36,6 +36,11 @@ const getTotalAmount = (items = []) => {
       return acc += item.amount
   }, 0)
 }
+
+const getAddedProduct = (items = []) => {
+  return items.filter((item) => (item.amount && item.amount > 0))
+}
+
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState(products);
     const {tg, queryId} = useTelegram();
@@ -65,7 +70,7 @@ const ProductList = () => {
     const onChange = (product) => {
       const newArr = addedItems.map(item => {
         if(item.id === product.id) {
-          if(product.amount > 0) return product
+          return product
         }
         return item
       })
@@ -75,10 +80,12 @@ const ProductList = () => {
       if(newArr.length === 0) {
           tg.MainButton.hide();
       } else {
-          tg.MainButton.show();
-          tg.MainButton.setParams({
-              text: `Сделать заказ (${newArr.length}) ${getTotalAmount(newArr)}kg`
-          })
+        const addedProducts = getAddedProduct(newArr)
+
+        tg.MainButton.show();
+        tg.MainButton.setParams({
+            text: `Сделать заказ  ${addedProducts.length}кол-во  ${getTotalAmount(addedProducts)}кг`
+        })
       }
     }
 
