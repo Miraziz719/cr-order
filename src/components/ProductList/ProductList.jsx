@@ -3,6 +3,7 @@ import './ProductList.css';
 import ProductItem from "../ProductItem/ProductItem";
 import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
+const baseUrl = process.env.BASE_URL || 'http://localhost:5000/api/v1'
 
 const productsInCategory = [
   {
@@ -53,7 +54,7 @@ const ProductList = () => {
             products: getAddedProduct(),
             queryId,
         }
-        fetch('http://localhost:5000/api/v1/common/order', {
+        fetch(baseUrl + '/common/order', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
