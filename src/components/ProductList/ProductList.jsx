@@ -29,7 +29,7 @@ const productsInCategory = [
   },
 ]
 const products = productsInCategory.map(cat => {
-  return cat.items
+  return cat.items 
 }).flat(1)
 
 const getTotalAmount = (items = []) => {
