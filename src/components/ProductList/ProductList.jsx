@@ -48,8 +48,6 @@ const ProductList = () => {
     const [addedItems, setAddedItems] = useState(products);
     const {tg, queryId} = useTelegram();
 
-    console.log(queryId)
-
 
     const onSendData = useCallback(() => {
         const data = {
@@ -112,7 +110,6 @@ const ProductList = () => {
                 
               </div>
             ))}
-            <button onClick={onSendData}>send data</button>
         </div>
     );
 };
