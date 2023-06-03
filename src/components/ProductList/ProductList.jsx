@@ -50,8 +50,10 @@ const ProductList = () => {
 
 
     const onSendData = useCallback(() => {
+        const products = getAddedProduct(addedItems)
         const data = {
-            products: getAddedProduct(addedItems),
+            products,
+            totalWeight: getTotalAmount(products),
             queryId,
         }
         fetch(baseUrl + '/common/order', {
