@@ -83,13 +83,14 @@ const ProductList = () => {
       setAddedItems(newArr)
 
       const addedProducts = getAddedProduct(newArr)
-      if(addedProducts.length === 0) {
+      const length = addedProducts.length
+      if(length === 0) {
           tg.MainButton.hide();
       } else {
 
         tg.MainButton.show();
         tg.MainButton.setParams({
-            text: `Сделать заказ  ${addedProducts.length}кол-во  ${getTotalAmount(addedProducts)}кг`
+            text: `Сделать заказ  ${length}вид${length>1??'а'}  ${getTotalAmount(addedProducts)}кг`
         })
       }
     }
