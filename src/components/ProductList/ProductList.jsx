@@ -90,7 +90,7 @@ const ProductList = () => {
 
         tg.MainButton.show();
         tg.MainButton.setParams({
-            text: `Сделать заказ  ${length}вид${(length>1&&'а')}  ${getTotalAmount(addedProducts)}кг`
+            text: `Сделать заказ  ${length}вид${length>1?'а':''}  ${getTotalAmount(addedProducts)}кг`
         })
       }
     }
