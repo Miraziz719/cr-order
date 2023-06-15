@@ -34,7 +34,7 @@ const products = productsInCategory.map(cat => {
 
 const getTotalAmount = (items = []) => {
   return items.reduce((acc, item) => {
-      return acc += +item.amount
+      return acc += +item.amount 
   }, 0)
 }
 
