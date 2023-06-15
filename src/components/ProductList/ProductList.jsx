@@ -3,7 +3,7 @@ import './ProductList.css';
 import ProductItem from "../ProductItem/ProductItem";
 import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
-const baseUrl = process.env.BASE_URL || 'http://localhost:5000/api/v1'
+const baseUrl = process.env.BASE_URL || 'https://mayda.uz/api/v1'
 
 const productsInCategory = [
   {
@@ -97,7 +97,7 @@ const ProductList = () => {
 
     return (
         <div>
-            <button onClick={onSendData}>send</button>
+            {/* <button onClick={onSendData}>send</button> */}
             {productsInCategory.map((cat, cidx) => (
               <div className='p-[12px] max-w-[450px] mx-auto'  key={cidx}>
                 <p className='pb-[5px] text-hint font-bold'>{cat.title}</p>
