@@ -97,6 +97,7 @@ const ProductList = () => {
 
     return (
         <div>
+            <button onClick={onSendData}>send</button>
             {productsInCategory.map((cat, cidx) => (
               <div className='p-[12px] max-w-[450px] mx-auto'  key={cidx}>
                 <p className='pb-[5px] text-hint font-bold'>{cat.title}</p>
