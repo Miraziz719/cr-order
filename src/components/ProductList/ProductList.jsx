@@ -90,7 +90,7 @@ const ProductList = () => {
     return (
         <div>
           
-            {/* <button onClick={onSendData}>send</button> */}
+            <button onClick={onSendData}>send</button>
             {
               loading 
                 ? <div className='flex justify-center items-center h-screen'>Loading...</div> 
