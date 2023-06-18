@@ -64,19 +64,22 @@ const ProductItem = ({product, className, onChange}) => {
 
     return (
         <div className={'flex justify-between items-center ' + className}>
-            <div className=''>{product.title}</div>
-            <div className='border border-button border-solid rounded-md overflow-hidden h-[36px] shadow-sm'>
-                <button 
-                    className='px-[16px] h-full bg-button text-button-text'
-                    onMouseDown={e => handleStart(e, false)}
-                    onTouchStart={e => handleStart(e, false, true)}
-                >-</button>
-                <input onChange={handleChangeInput} value={amount} className='max-w-[60px] px-[8px] h-full bg-bg' type='number' inputMode='numeric' ></input>
-                <button 
-                    className='px-[16px] h-full bg-button text-button-text'
-                    onMouseDown={e => handleStart(e, true)}
-                    onTouchStart={e => handleStart(e, true, true)}
-                >+</button>
+            <div className='ml-[3px]'>{product.name}</div>
+            <div className='flex items-center'>
+                <div className='border border-button border-solid rounded-md overflow-hidden h-[36px] shadow-sm'>
+                    <button 
+                        className='px-[16px] h-full bg-button text-button-text'
+                        onMouseDown={e => handleStart(e, false)}
+                        onTouchStart={e => handleStart(e, false, true)}
+                    >-</button>
+                    <input onChange={handleChangeInput} value={amount} className='max-w-[60px] px-[8px] h-full bg-bg' type='number' inputMode='numeric' ></input>
+                    <button 
+                        className='px-[16px] h-full bg-button text-button-text'
+                        onMouseDown={e => handleStart(e, true)}
+                        onTouchStart={e => handleStart(e, true, true)}
+                    >+</button>
+                </div>
+                <div className='ml-[5px] w-[20px]'>{product.isQuantity ? 'шт' : 'кг'}</div>
             </div>
         </div>
     );

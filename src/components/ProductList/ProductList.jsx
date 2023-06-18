@@ -3,34 +3,7 @@ import './ProductList.css';
 import ProductItem from "../ProductItem/ProductItem";
 import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
-const baseUrl = process.env.BASE_URL || 'https://mayda.uz/api/v1'
-
-const productsInCategory = [
-  {
-    title: "Go'sht",
-    items: [
-      {id: '1', title: '0.3-0.6'},
-      {id: '2', title: '0.7-0.9'},
-      {id: '3', title: '1.0-1.2'},
-      {id: '4', title: '1.2-1.5'},
-    ]
-  }, {
-    title: "Razdelka",
-    items: [
-      {id: '5', title: 'File'},
-      {id: '6', title: 'Bedro'},
-      {id: '7', title: 'Bedro laxm'},
-      {id: '8', title: 'Akrachka'},
-      {id: '9', title: 'Golen'},
-      {id: '10', title: 'Qanot'},
-      {id: '11', title: 'Boyin'},
-      {id: '12', title: 'Dum'},
-    ]
-  },
-]
-const products = productsInCategory.map(cat => {
-  return cat.items 
-}).flat(1)
+const baseUrl = process.env.BASE_URL || 'http://localhost:5000/api/v1'//'https://mayda.uz/api/v1'
 
 const getTotalAmount = (items = []) => {
   return items.reduce((acc, item) => {
@@ -42,11 +15,27 @@ const getAddedProduct = (items = []) => {
   return items.filter((item) => (item.amount && item.amount > 0))
 }
 
-
-
 const ProductList = () => {
-    const [addedItems, setAddedItems] = useState(products);
+    const [productsInCategory, setProduct] = useState([]);
     const {tg, queryId} = useTelegram();
+
+    const products = productsInCategory.map(cat => {
+      return cat.items 
+    }).flat(1)
+
+    const [addedItems, setAddedItems] = useState(products);
+
+    const fetchData = () => {
+      return fetch(baseUrl + "/product/getForClient")
+        .then((res) => res.json())
+        .then((data) => {
+          setProduct(data.products)
+        });
+    }
+  
+    useEffect(() => {
+      fetchData();
+    },[])
 
 
     const onSendData = useCallback(() => {
@@ -98,13 +87,13 @@ const ProductList = () => {
     return (
         <div>
             {/* <button onClick={onSendData}>send</button> */}
-            {productsInCategory.map((cat, cidx) => (
-              <div className='p-[12px] max-w-[450px] mx-auto'  key={cidx}>
-                <p className='pb-[5px] text-hint font-bold'>{cat.title}</p>
+            {productsInCategory.map((cat) => (
+              <div className='p-[12px] max-w-[450px] mx-auto'  key={cat._id}>
+                <p className='pb-[5px] text-hint font-bold'>{cat.name}</p>
                 <div className=''>
-                  {cat.items.map((item, idx) => (
+                  {cat.items.map((item) => (
                     <ProductItem
-                      key={idx}
+                      key={item._id}
                       product={item}
                       onChange={onChange}
                       className='my-[5px] bg-bg rounded-md p-[5px] shadow-sm'
