@@ -3,7 +3,7 @@ import './ProductList.css';
 import ProductItem from "../ProductItem/ProductItem";
 import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
-const baseUrl = process.env.BASE_URL || 'http://localhost:5000/api/v1'//'https://mayda.uz/api/v1'
+const baseUrl = process.env.BASE_URL || 'https://mayda.uz/api/v1' //'http://localhost:5000/api/v1'
 
 const getTotalAmount = (items = []) => {
   return items.reduce((acc, item) => {
@@ -16,6 +16,7 @@ const getAddedProduct = (items = []) => {
 }
 
 const ProductList = () => {
+    const [loading, setLoading] = useState(false);
     const [productsInCategory, setProduct] = useState([]);
     const {tg, queryId} = useTelegram();
 
@@ -26,11 +27,13 @@ const ProductList = () => {
     const [addedItems, setAddedItems] = useState(products);
 
     const fetchData = () => {
+      setLoading(true)
       return fetch(baseUrl + "/product/getForClient")
         .then((res) => res.json())
         .then((data) => {
           setProduct(data.products)
-        });
+        })
+        .finally(() => setLoading(false))
     }
   
     useEffect(() => {
@@ -86,23 +89,29 @@ const ProductList = () => {
 
     return (
         <div>
+          
             {/* <button onClick={onSendData}>send</button> */}
-            {productsInCategory.map((cat) => (
-              <div className='p-[12px] max-w-[450px] mx-auto'  key={cat._id}>
-                <p className='pb-[5px] text-hint font-bold'>{cat.name}</p>
-                <div className=''>
-                  {cat.items.map((item) => (
-                    <ProductItem
-                      key={item._id}
-                      product={item}
-                      onChange={onChange}
-                      className='my-[5px] bg-bg rounded-md p-[5px] shadow-sm'
-                    />
-                  ))}
-                </div>
-                
-              </div>
-            ))}
+            {
+              loading 
+                ? <div className='flex justify-center items-center h-screen'>Loading...</div> 
+                : !productsInCategory || !productsInCategory.length 
+                  ? <div className='flex justify-center items-center h-screen'>В базе нет товаров 😐</div>
+                  : productsInCategory.map((cat) => (
+                    <div className='p-[12px] max-w-[450px] mx-auto' key={cat._id}>
+                      <p className='pb-[5px] text-hint font-bold'>{cat.name}</p>
+                      <div className=''>
+                        {cat.items.map((item) => (
+                          <ProductItem
+                            key={item._id}
+                            product={item}
+                            onChange={onChange}
+                            className='my-[5px] bg-bg rounded-md p-[5px] shadow-sm'
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))
+            }
         </div>
     );
 };
