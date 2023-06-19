@@ -19,7 +19,7 @@ const ProductList = () => {
     const [loading, setLoading] = useState(false);
     const [productsInCategory, setProduct] = useState([]);
     const [addedItems, setAddedItems] = useState([]);
-    const {tg, queryId} = useTelegram();
+    const {tg, queryId, user} = useTelegram();
 
     const fetchData = () => {
       setLoading(true)
@@ -85,7 +85,7 @@ const ProductList = () => {
 
     return (
         <div>
-
+            <pre>{user}</pre>
             {/* <button onClick={onSendData}>send</button> */}
             {
               loading 
