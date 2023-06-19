@@ -66,7 +66,7 @@ const ProductList = () => {
 
     const onChange = (product) => {
       const newArr = addedItems.map(item => {
-        if(item.id === product.id) {
+        if(item._id === product._id) {
           return product
         }
         return item
@@ -90,7 +90,7 @@ const ProductList = () => {
     return (
         <div>
           
-            <button onClick={onSendData}>send</button>
+            {/* <button onClick={onSendData}>send</button> */}
             {
               loading 
                 ? <div className='flex justify-center items-center h-screen'>Loading...</div> 

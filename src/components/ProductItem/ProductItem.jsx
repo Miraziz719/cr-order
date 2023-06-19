@@ -12,13 +12,6 @@ const ProductItem = ({product, className, onChange}) => {
         })
     }, [amount])
 
-    useEffect(() => {
-        onChange({
-           ...product, 
-           amount: amount
-        })
-    }, [amount])
-
     const onAddHandler = () => {
         setamount(prevValue => {
             // if((+prevValue+5)>=10000) return 9999
