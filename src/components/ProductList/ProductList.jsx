@@ -18,13 +18,8 @@ const getAddedProduct = (items = []) => {
 const ProductList = () => {
     const [loading, setLoading] = useState(false);
     const [productsInCategory, setProduct] = useState([]);
+    const [addedItems, setAddedItems] = useState([]);
     const {tg, queryId} = useTelegram();
-
-    const products = productsInCategory.map(cat => {
-      return cat.items 
-    }).flat(1)
-
-    const [addedItems, setAddedItems] = useState(products);
 
     const fetchData = () => {
       setLoading(true)
@@ -32,6 +27,7 @@ const ProductList = () => {
         .then((res) => res.json())
         .then((data) => {
           setProduct(data.products)
+          setAddedItems(data.products.map(cat => cat.items ).flat(1))
         })
         .finally(() => setLoading(false))
     }
@@ -89,7 +85,7 @@ const ProductList = () => {
 
     return (
         <div>
-          
+
             {/* <button onClick={onSendData}>send</button> */}
             {
               loading 
