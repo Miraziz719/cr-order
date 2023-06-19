@@ -19,7 +19,7 @@ const ProductList = () => {
     const [loading, setLoading] = useState(false);
     const [productsInCategory, setProduct] = useState([]);
     const [addedItems, setAddedItems] = useState([]);
-    const {tg, queryId, user, chat} = useTelegram();
+    const {tg, queryId, user} = useTelegram();
 
     const fetchData = () => {
       setLoading(true)
@@ -43,6 +43,7 @@ const ProductList = () => {
             products,
             totalWeight: getTotalAmount(products),
             queryId,
+            user
         }
         fetch(baseUrl + '/common/order', {
             method: 'POST',
@@ -85,7 +86,7 @@ const ProductList = () => {
 
     return (
         <div>
-            <pre>{JSON.stringify(tg, null, 2) }</pre>
+            {/* <pre>{JSON.stringify(user, null, 2) }</pre> */}
             {/* <button onClick={onSendData}>send</button> */}
             {
               loading 
