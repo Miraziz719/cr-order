@@ -7,8 +7,9 @@ const baseUrl = process.env.BASE_URL || 'https://mayda.uz/api/v1' // 'http://loc
 
 const getTotalAmount = (items = []) => {
   return items.reduce((acc, item) => {
-      return acc += +item.amount 
-  }, 0)
+      item.isQuantity ? acc.amount += +item.amount : acc.weight += +item.amount
+      return acc
+  }, {amount: 0, weight: 0})
 }
 
 const getAddedProduct = (items = []) => {
@@ -76,10 +77,10 @@ const ProductList = () => {
       if(length === 0) {
           tg.MainButton.hide();
       } else {
-
+        const total = getTotalAmount(addedProducts)
         tg.MainButton.show();
         tg.MainButton.setParams({
-            text: `Сделать заказ  ${length}вид${length>1?'а':''}  ${getTotalAmount(addedProducts)}кг`
+            text: `Сделать заказ  ${length}вид${length>1?'а':''}${total.amount?('  '+total.amount+'шт'):''}${total.weight?('  '+total.weigth+'кг'):''}`
         })
       }
     }
