@@ -56,10 +56,10 @@ const ProductItem = ({product, className, onChange}) => {
     }
 
     return (
-        <div className={'flex justify-between items-center ' + className}>
+        <div className={'grid grid-cols-3 items-center ' + className}>
             <div className='ml-[3px]'>{product.name}</div>
-            <div className='flex items-center'>
-                <div className='border border-button border-solid rounded-md overflow-hidden h-[36px] shadow-sm'>
+            <div className='relative'>
+                <div className='border border-button border-solid rounded-md overflow-hidden h-[36px] shadow-sm absolute flex top-[-18px]'>
                     <button 
                         className='px-[16px] h-full bg-button text-button-text'
                         onMouseDown={e => handleStart(e, false)}
@@ -72,8 +72,8 @@ const ProductItem = ({product, className, onChange}) => {
                         onTouchStart={e => handleStart(e, true, true)}
                     >+</button>
                 </div>
-                <div className='ml-[5px] w-[20px]'>{product.isQuantity ? 'шт' : 'кг'}</div>
             </div>
+            <div className='m-[5px] text-right'>{product.isQuantity ? 'шт' : 'кг'}</div>
         </div>
     );
 };
