@@ -22,10 +22,11 @@ const ProductList = () => {
     const [addedItems, setAddedItems] = useState([]);
     const {tg, queryId, user} = useTelegram();
     const params = useParams()
+    const server = params.server || 'chickenrealapi-1.onrender.com'
 
     const fetchData = () => {
       setLoading(true)
-      return fetch("https://" + params.server + "/api/v1/product/getForClient")
+      return fetch("https://" + server + "/api/v1/product/getForClient")
         .then((res) => res.json())
         .then((data) => {
           setProduct(data.products)
@@ -47,7 +48,7 @@ const ProductList = () => {
             queryId,
             user
         }
-        fetch("https://" + params.server + '/common/order', {
+        fetch("https://" + server + '/api/v1/common/order', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

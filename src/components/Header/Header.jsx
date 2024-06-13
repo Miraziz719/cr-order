@@ -10,10 +10,11 @@ const Header = () => {
   const [agent, setAgent] = useState(null)
   const [date, setDate] = useState(null)
   const params = useParams()
+  const server = params.server || 'chickenrealapi-1.onrender.com'
 
   const fetchData = () => {
     setLoading(true)
-    return fetch("https://" + params.server + "/api/v1/agent/getForSelect")
+    return fetch("https://" + server + "/api/v1/agent/getForSelect")
       .then((res) => res.json())
       .then((data) => {
         setAgents(data.agents)
