@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
-import './ProductList.css';
 import ProductItem from "../ProductItem/ProductItem";
 import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
-const urlParams = new URLSearchParams(queryString)
-const server = urlParams.get('server')
-const baseUrl = 'https://' + server + '/api/v1'
+import { useParams } from "react-router-dom";
+import './ProductList.css';
 
 const getTotalAmount = (items = []) => {
   return items.reduce((acc, item) => {
@@ -23,10 +21,11 @@ const ProductList = () => {
     const [productsInCategory, setProduct] = useState([]);
     const [addedItems, setAddedItems] = useState([]);
     const {tg, queryId, user} = useTelegram();
+    const params = useParams()
 
     const fetchData = () => {
       setLoading(true)
-      return fetch(baseUrl + "/product/getForClient")
+      return fetch("https://" + params.server + "/api/v1/product/getForClient")
         .then((res) => res.json())
         .then((data) => {
           setProduct(data.products)
@@ -48,7 +47,7 @@ const ProductList = () => {
             queryId,
             user
         }
-        fetch(baseUrl + '/common/order', {
+        fetch("https://" + params.server + '/common/order', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

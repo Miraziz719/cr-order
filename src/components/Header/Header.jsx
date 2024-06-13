@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTelegram } from "../../hooks/useTelegram";
+import { useParams } from "react-router-dom";
 import './Header.css'
-const urlParams = new URLSearchParams(queryString)
-const server = urlParams.get('server')
-const baseUrl = 'https://' + server + '/api/v1'
-// const baseUrl = process.env.BASE_URL || 'http://localhost:5000/api/v1' // 'https://mayda.uz/api/v1' // 
 
 const Header = () => {
   const {user} = useTelegram()
@@ -12,10 +9,11 @@ const Header = () => {
   const [agents, setAgents] = useState([])
   const [agent, setAgent] = useState(null)
   const [date, setDate] = useState(null)
+  const params = useParams()
 
   const fetchData = () => {
     setLoading(true)
-    return fetch(baseUrl + "/agent/getForSelect")
+    return fetch("https://" + params.server + "/api/v1/agent/getForSelect")
       .then((res) => res.json())
       .then((data) => {
         setAgents(data.agents)
