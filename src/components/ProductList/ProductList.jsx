@@ -3,7 +3,9 @@ import './ProductList.css';
 import ProductItem from "../ProductItem/ProductItem";
 import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
-const baseUrl = process.env.BASE_URL || 'https://mayda.uz/api/v1' // 'http://localhost:5000/api/v1' //
+const urlParams = new URLSearchParams(queryString)
+const server = urlParams.get('server')
+const baseUrl = 'https://' + server + '/api/v1'
 
 const getTotalAmount = (items = []) => {
   return items.reduce((acc, item) => {
