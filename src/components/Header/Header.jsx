@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useTelegram } from "../../hooks/useTelegram";
 import './Header.css'
-const baseUrl = process.env.BASE_URL || 'http://localhost:5000/api/v1' // 'https://mayda.uz/api/v1' // 
+const urlParams = new URLSearchParams(queryString)
+const server = urlParams.get('server')
+const baseUrl = 'https://' + server + '/api/v1'
+// const baseUrl = process.env.BASE_URL || 'http://localhost:5000/api/v1' // 'https://mayda.uz/api/v1' // 
 
 const Header = () => {
   const {user} = useTelegram()
