@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import ProductItem from "../ProductItem/ProductItem";
 import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import './ProductList.css';
 
 const getTotalAmount = (items = []) => {
@@ -21,10 +21,12 @@ const ProductList = () => {
     const [productsInCategory, setProduct] = useState([]);
     const [addedItems, setAddedItems] = useState([]);
     const {tg, queryId, user} = useTelegram();
-    const params = useParams()
-    const server = params.server || 'chickenrealapi-1.onrender.com'
+    const location = useLocation()
+    const queryParams = new URLSearchParams(location.search)
+    const server = queryParams.get('server')
 
     const fetchData = () => {
+      if(!server) return 
       setLoading(true)
       return fetch("https://" + server + "/api/v1/product/getForClient")
         .then((res) => res.json())
@@ -41,6 +43,7 @@ const ProductList = () => {
 
 
     const onSendData = useCallback(() => {
+        if(!server) return 
         const products = getAddedProduct(addedItems)
         const data = {
             products,

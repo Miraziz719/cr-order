@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTelegram } from "../../hooks/useTelegram";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import './Header.css'
 
 const Header = () => {
@@ -9,10 +9,13 @@ const Header = () => {
   const [agents, setAgents] = useState([])
   const [agent, setAgent] = useState(null)
   const [date, setDate] = useState(null)
-  const params = useParams()
-  const server = params.server || 'chickenrealapi-1.onrender.com'
+
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const server = queryParams.get('server')
 
   const fetchData = () => {
+    if(!server) return 
     setLoading(true)
     return fetch("https://" + server + "/api/v1/agent/getForSelect")
       .then((res) => res.json())
