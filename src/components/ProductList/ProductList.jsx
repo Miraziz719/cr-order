@@ -26,7 +26,7 @@ const ProductList = () => {
     const server = queryParams.get('server')
 
     const fetchData = () => {
-      if(!server) return 
+      if(!server || !tg.user) return 
       setLoading(true)
       return fetch("https://" + server + "/api/v1/product/getForClient")
         .then((res) => res.json())
@@ -43,7 +43,7 @@ const ProductList = () => {
 
 
     const onSendData = useCallback(() => {
-        if(!server) return 
+        if(!server || !tg.user) return 
         const products = getAddedProduct(addedItems)
         const data = {
             products,
