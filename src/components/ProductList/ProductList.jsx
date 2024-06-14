@@ -24,9 +24,10 @@ const ProductList = () => {
     const location = useLocation()
     const queryParams = new URLSearchParams(location.search)
     const server = queryParams.get('server')
+    const token = queryParams.get('token')
 
     const fetchData = () => {
-      if(!server || !tg.user) return 
+      if(!server || (!tg.user && !token)) return 
       setLoading(true)
       return fetch("https://" + server + "/api/v1/product/getForClient")
         .then((res) => res.json())
@@ -43,7 +44,7 @@ const ProductList = () => {
 
 
     const onSendData = useCallback(() => {
-        if(!server || !tg.user) return 
+        if(!server || (!tg.user && !token)) return 
         const products = getAddedProduct(addedItems)
         const data = {
             products,
