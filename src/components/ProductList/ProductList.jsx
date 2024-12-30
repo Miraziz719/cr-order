@@ -93,8 +93,8 @@ const ProductList = () => {
 
     return (
         <div>
-            {/* <pre>{JSON.stringify(user, null, 2) }</pre> */}
-            {/* <button onClick={onSendData}>send</button> */}
+            <pre>{JSON.stringify(user, null, 2) }</pre>
+            <button onClick={onSendData}>send</button>
             {
               loading 
                 ? <div className='flex justify-center items-center h-screen'>Loading...</div> 
