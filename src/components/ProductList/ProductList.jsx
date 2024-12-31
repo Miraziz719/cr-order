@@ -28,8 +28,7 @@ const ProductList = () => {
 
 
     const fetchData = () => {
-      if(!server) return 
-      // if(!server || (!tg.user && !token)) return 
+      if(!server || (!user && !token)) return 
       setLoading(true)
       return fetch("https://" + server + "/api/v1/product/getForClient")
         .then((res) => res.json())
@@ -46,8 +45,7 @@ const ProductList = () => {
 
 
     const onSendData = useCallback(() => {
-        if(!server) return 
-        // if(!server || (!tg.user && !token)) return 
+        if(!server || (!user && !token)) return 
         const products = getAddedProduct(addedItems)
         const data = {
             products,
@@ -96,10 +94,9 @@ const ProductList = () => {
 
     return (
         <div>
-            token: {token}
-            <pre>{JSON.stringify(user, null, 2) }</pre>
-            <pre>{JSON.stringify(queryId, null, 2) }</pre>
-            <pre>{JSON.stringify(tg.user, null, 2) }</pre>
+            {/* token: {token} */}
+            {/* <pre>{JSON.stringify(user, null, 2) }</pre> */}
+            {/* <pre>{JSON.stringify(queryId, null, 2) }</pre> */}
             {/* <button onClick={onSendData}>send</button> */}
             {
               loading 
