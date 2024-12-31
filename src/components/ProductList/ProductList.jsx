@@ -35,7 +35,7 @@ const ProductList = () => {
         .then((res) => res.json())
         .then((data) => {
           setProduct(data.products)
-          setAddedItems(data.products.map(cat => cat.items ).flat(1))
+          setAddedItems(data.products.map(cat => cat.items).flat(1))
         })
         .finally(() => setLoading(false))
     }
@@ -46,7 +46,7 @@ const ProductList = () => {
 
 
     const onSendData = useCallback(() => {
-        if(!server || (!tg.user && !token)) return 
+        // if(!server || (!tg.user && !token)) return 
         const products = getAddedProduct(addedItems)
         const data = {
             products,
@@ -96,7 +96,7 @@ const ProductList = () => {
     return (
         <div>
             {/* <pre>{JSON.stringify(user, null, 2) }</pre> */}
-            <button onClick={onSendData}>send</button>
+            {/* <button onClick={onSendData}>send</button> */}
             {
               loading 
                 ? <div className='flex justify-center items-center h-screen'>Loading...</div> 
