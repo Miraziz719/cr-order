@@ -26,12 +26,15 @@ const ProductList = () => {
     const server = queryParams.get('server')
     const token = queryParams.get('token')
 
+    console.log(server, tg.user, token)
+
     const fetchData = () => {
       if(!server || (!tg.user && !token)) return 
       setLoading(true)
       return fetch("https://" + server + "/api/v1/product/getForClient")
         .then((res) => res.json())
         .then((data) => {
+          console.log('fetched: ', data)
           setProduct(data.products)
           setAddedItems(data.products.map(cat => cat.items ).flat(1))
         })
