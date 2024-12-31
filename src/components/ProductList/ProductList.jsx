@@ -96,8 +96,8 @@ const ProductList = () => {
 
     return (
         <div>
-            {server}
-            {token}
+            server: {server}
+            token: {token}
             <pre>{JSON.stringify(user, null, 2) }</pre>
             <button onClick={onSendData}>send</button>
             {
