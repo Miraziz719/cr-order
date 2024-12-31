@@ -29,12 +29,11 @@ const ProductList = () => {
 
     const fetchData = () => {
       console.log('called ')
-      if(!server || (!tg.user && !token)) return 
+      // if(!server || (!tg.user && !token)) return 
       setLoading(true)
       return fetch("https://" + server + "/api/v1/product/getForClient")
         .then((res) => res.json())
         .then((data) => {
-          // console.log('fetched: ', data)
           setProduct(data.products)
           setAddedItems(data.products.map(cat => cat.items ).flat(1))
         })
