@@ -4,22 +4,31 @@ import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
 import { useLocation } from "react-router-dom";
 import './ProductList.css';
+import { create } from 'zustand'
 
-const getTotalAmount = (items = []) => {
+export const useStoreProduct = create((set) => ({
+  productsInCategory: [],
+  addedItems: [],
+  loading: false,
+  setProduct: (value) => set({ productsInCategory: value }),
+  setAddedItems: (value) => set({ addedItems: value }),
+  setLoading: (value) => set({ loading: value }),
+}));
+
+export const getTotalAmount = (items = []) => {
   return items.reduce((acc, item) => {
       item.isQuantity ? acc.amount += +item.amount : acc.weight += +item.amount
       return acc
   }, {amount: 0, weight: 0})
 }
 
-const getAddedProduct = (items = []) => {
+export const getAddedProduct = (items = []) => {
   return items.filter((item) => (item.amount && item.amount > 0))
 }
 
+
 const ProductList = () => {
-    const [loading, setLoading] = useState(false);
-    const [productsInCategory, setProduct] = useState([]);
-    const [addedItems, setAddedItems] = useState([]);
+    const {productsInCategory, addedItems, loading, setProduct, setAddedItems, setLoading } = useStoreProduct() 
     const {tg, queryId, user} = useTelegram();
     const location = useLocation()
     const queryParams = new URLSearchParams(location.search)
@@ -30,7 +39,7 @@ const ProductList = () => {
     const fetchData = () => {
       if(!server || (!user && !token)) return 
       setLoading(true)
-      return fetch("https://" + server + "/api/v1/product/getForClient")
+      return fetch("https://" + server + "/api/v1/product/getForClient") ////   https > http
         .then((res) => res.json())
         .then((data) => {
           setProduct(data.products)
@@ -94,10 +103,6 @@ const ProductList = () => {
 
     return (
         <div>
-            {/* token: {token} */}
-            {/* <pre>{JSON.stringify(user, null, 2) }</pre> */}
-            {/* <pre>{JSON.stringify(queryId, null, 2) }</pre> */}
-            {/* <button onClick={onSendData}>send</button> */}
             {
               loading 
                 ? <div className='flex justify-center items-center h-screen'>Loading...</div> 
